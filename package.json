@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./src/app.js",
     "dev": "nodemon ./src/app.js",
-    "deploy": "git add . && git commit -m \"Update\" && git push origin pepi"
+    "deploy": "git add . && git commit -m \"Update\" && git push origin master"
   },
   "author": "",
   "license": "ISC",
