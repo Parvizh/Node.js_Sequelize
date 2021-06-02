@@ -41,15 +41,31 @@ exports.getPostByUser = async (req, res) => {
 exports.getAllPost = async (req, res) => {
     try {
         const users = await User.findAll({
-            include:[{
-                model:Post,
-                as:'posts',
-                attributes:['title']
+            include: [{
+                model: Post,
+                as: 'posts',
+                attributes: ['title']
             }]
         })
         res.status(200).json({
+            success: 0,
+            yesni: users
+        })
+    } catch (error) {
+        errorHandler(res, 500, error.message);
+    }
+}
+
+exports.deleteUser = async (req, res) => {
+    const { id } = req.params
+    try {
+        const user = await User.destroy({
+            where: { id }
+        })
+        console.log(user)
+        res.status(200).json({
             success:0,
-            yesni:users
+            message:"successfully deleted user"
         })
     } catch (error) {
         errorHandler(res, 500, error.message);
