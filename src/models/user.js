@@ -14,9 +14,8 @@
 //     return User;
 // };
 
-const sequelize = require('../config/sequelize');
+const {sequelize} = require('../config/sequelize');
 const Sequelize = require('sequelize');
-const Post = require('./post')
 
 const User = sequelize.define('User', {
     email: Sequelize.STRING,

@@ -22,17 +22,36 @@ exports.getPostByUser = async (req, res) => {
     const { id } = req.params
     try {
         const user = await User.findOne({
-            where: { id }, include: [{
+            where: { id },
+            include: [{
                 model: Post,
                 as: 'posts',
-                where: { userId: id } //
+                where: { userId: id }
             }]
         })
         res.status(200).json({
-            success:0,
+            success: 0,
             user
         })
     } catch (error) {
         errorHandler(res, 500, error.message)
+    }
+}
+
+exports.getAllPost = async (req, res) => {
+    try {
+        const users = await User.findAll({
+            include:[{
+                model:Post,
+                as:'posts',
+                attributes:['title']
+            }]
+        })
+        res.status(200).json({
+            success:0,
+            yesni:users
+        })
+    } catch (error) {
+        errorHandler(res, 500, error.message);
     }
 }

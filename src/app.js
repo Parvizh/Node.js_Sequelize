@@ -8,7 +8,7 @@ const app = express();
 const User = require('./models/user');
 const Post = require('./models/post');
 
-const sequelize = require('./config/sequelize');
+const {sequelize,sequelizeLocal} = require('./config/sequelize');
 app.use(cors({ origin: '*' }));
 app.use(express.json({extended:false}));
 app.use(express.urlencoded({extended:false}));
@@ -17,6 +17,8 @@ app.use('/', express.static(path.join(__dirname, "..", "public")));
 app.use('*', (req, res) => {
     res.status(404).json({ error: 'not found' });
 });
+
+sequelizeLocal.sync()
 
 sequelize.sync().then(()=>{
     app.listen(process.env.PORT, () => {
