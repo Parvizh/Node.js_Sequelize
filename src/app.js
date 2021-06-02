@@ -5,6 +5,8 @@ const cors = require('cors');
 const router = require('./api/index');
 const app = express();
 // require('./models/index')
+const User = require('./models/user');
+const Post = require('./models/post');
 
 const sequelize = require('./config/sequelize');
 app.use(cors({ origin: '*' }));
@@ -21,7 +23,8 @@ sequelize.sync().then(()=>{
         console.log(`Server is running on port ${process.env.PORT}`)
     })
 }).catch(err=>console.log(err));
-
+User.hasMany(Post, { as: "posts", foreignKey: 'userId' })
+Post.belongsTo(User, { foreignKey: 'userId' })
 // app.listen(process.env.PORT, () => {
 //     console.log(`Server is running on port ${process.env.PORT}`)
 // })
