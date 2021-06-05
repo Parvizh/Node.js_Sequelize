@@ -1,15 +1,18 @@
 const User = require('../models/user');
 const Post = require('../models/post');
+const jwt = require('jsonwebtoken');
 const errorHandler = require('../helpers/error_handler');
 
 exports.createUser = async (req, res) => {
-    const { email, firstName, lastName } = req.body;
+    const { email, firstName, lastName, password } = req.body;
     try {
-        if (!email || !firstName || !lastName) return errorHandler(res, 400, "Please add email or another");
-        User.create({ email, firstName, lastName }).then((user) => {
+        if (!email || !firstName || !lastName || !password) return errorHandler(res, 400, "Please add email or another");
+        User.create({ email, firstName, lastName, password }).then((user) => {
+            const token = jwt.sign({ id: user.id.toString() }, process.env.JWT_SECRET_KEY, { expiresIn: '10d' });
             res.status(200).json({
                 success: 0,
-                user
+                user,
+                token
             })
         })
     } catch (error) {
@@ -19,7 +22,7 @@ exports.createUser = async (req, res) => {
 }
 
 exports.getPostByUser = async (req, res) => {
-    const { id } = req.params
+    const { id } = req.user
     try {
         const user = await User.findOne({
             where: { id },
@@ -49,7 +52,7 @@ exports.getAllPost = async (req, res) => {
         })
         res.status(200).json({
             success: 0,
-            yesni: users
+            users
         })
     } catch (error) {
         errorHandler(res, 500, error.message);
@@ -60,12 +63,12 @@ exports.deleteUser = async (req, res) => {
     const { id } = req.params
     try {
         const user = await User.destroy({
-            where: { id }
+            where: { id },
+            include: ['posts']
         })
-        console.log(user)
         res.status(200).json({
-            success:0,
-            message:"successfully deleted user"
+            success: 0,
+            message: "successfully deleted user"
         })
     } catch (error) {
         errorHandler(res, 500, error.message);
