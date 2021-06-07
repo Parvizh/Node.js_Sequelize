@@ -2,6 +2,7 @@ const Likes = require('../models/likes');
 const User = require('../models/user');
 const Post = require('../models/post');
 const errorHandler = require('../helpers/error_handler');
+const sequelize = require('sequelize')
 
 exports.likePost = async (req, res) => {
     const { postId } = req.body;
@@ -21,15 +22,19 @@ exports.likePost = async (req, res) => {
     }
 }
 
-exports.getLikedUser = async (req, res) => {
-    const { id: postId } = req.params;
+exports.getPostsadnLikes = async (req, res) => {
     try {
         const likedUser = await Likes.findAll({
-            attributes: ['likeId'], include: [{
-                model: User,
-                where: { id: postId }
-                // as: "posts"
-            }]
+            attributes: {
+                include: [[sequelize.fn('COUNT', sequelize.col('Likes.userId')), 'likes_count'], "likeId"],
+                exclude: ['userId', 'postId']
+            },
+            include: [{
+                model: Post,
+                attributes: { exclude: ['userId',] }
+            }],
+            order: [['createdAt', 'DESC']],
+            group: ['Likes.postId']
         })
         res.status(200).json({
             success: 0,
