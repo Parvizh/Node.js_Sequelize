@@ -9,7 +9,7 @@ exports.likePost = async (req, res) => {
     const { id: userId } = req.user;
     try {
         const post = await Post.findOne({ where: { id: postId } })
-        if (!post) return errorHandler(res, 400, "This post dosnt exist")
+        if (!post) return errorHandler(res, 400, "This post doesnt exist")
         const isLiked = await Likes.findOne({ where: { postId, userId } })
         if (isLiked) return errorHandler(res, 400, "you already liked this post")
         const likes = await Likes.create({ postId, userId });
