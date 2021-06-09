@@ -44,3 +44,11 @@ exports.getPostsadnLikes = async (req, res) => {
         errorHandler(res, 500, error.message)
     }
 }
+
+exports.getPostById = async (req, res) => {
+    try {
+
+    } catch (error) {
+
+    }
+}
