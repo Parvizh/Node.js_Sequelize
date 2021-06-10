@@ -6,7 +6,7 @@ const cors = require('cors');
 const router = require('./api/index');
 const app = express();
 const {sequelize,
-    // sequelizeLocal
+    sequelizeLocal
 } = require('./config/sequelize');
 
 app.use(cors({ origin: '*' }));
@@ -19,7 +19,7 @@ app.use('*', (req, res) => {
 });
 
 
-// sequelizeLocal.sync()
+sequelizeLocal.sync()
 sequelize.sync().then(()=>{
     app.listen(process.env.PORT, () => {
         console.log(`Server is running on port ${process.env.PORT}`)
