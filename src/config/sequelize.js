@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 
 const sequelize = new Sequelize("Rahat", "root", "", {
     dialect: "mysql",
-    host: "localhost"
+    host: "127.0.0.1"
 });
 
 const sequelizeLocal = new Sequelize("Multiple", "root", "", {
