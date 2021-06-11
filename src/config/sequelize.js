@@ -1,8 +1,8 @@
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize("bctest_pervizapi", "bctest_pervizapi", "pervizapi123", {
+const sequelize = new Sequelize("//name", "//user", "//password", {
     dialect: "mysql",
-    host: "45.143.99.40"
+    host: "0.0.0.0"
 });
 
 const sequelizeLocal = new Sequelize("Multiple", "root", "", {
