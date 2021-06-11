@@ -14,7 +14,8 @@ const MultiUser = sequelizeLocal.define('MultiUser', {
         validate: { isEmail: {
             msg:"email is false"
         } }
-    }
+    },
+    country:Sequelize.VIRTUAL//add some fields in object
 }, {
     freezeTableName: true,
     timestamps: true,

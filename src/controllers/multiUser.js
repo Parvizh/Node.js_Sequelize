@@ -17,3 +17,21 @@ exports.createMultiUser = async (req, res) => {
         errorHandler(res, 500, error.message)
     }
 }
+
+exports.getMultiUser = async (req,res)=>{
+    try {
+        const users = await MultiUser.findAll({});
+
+        users.map((user) => {
+            user.country = 'Cebrayil'
+        })
+
+        res.status(200).json({
+            success: 0,
+            message: "success",
+            users
+        })
+    } catch (error) {
+        errorHandler(res,500,error.errorHandler)
+    }
+}
