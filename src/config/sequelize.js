@@ -1,8 +1,8 @@
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize("//name", "//user", "//password", {
+const sequelize = new Sequelize("Rahat", "root", "", {
     dialect: "mysql",
-    host: "0.0.0.0"
+    host: "127.0.0.1"
 });
 
 const sequelizeLocal = new Sequelize("Multiple", "root", "", {
