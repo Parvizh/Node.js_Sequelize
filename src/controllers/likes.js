@@ -1,5 +1,4 @@
 const Likes = require('../models/likes');
-const User = require('../models/user');
 const Post = require('../models/post');
 const errorHandler = require('../helpers/error_handler');
 const sequelize = require('sequelize')
