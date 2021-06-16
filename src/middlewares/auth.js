@@ -6,6 +6,7 @@ const auth = async (req, res, next) => {
     try {
         const token = req.header('Authorization').replace('Bearer ', '');
         const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+        console.log(decoded.id)
         const user = await User.findOne({ where: { id: decoded.id } })
         if (!user) {
             return errorHandler(res, 400, 'User cant find');
@@ -14,7 +15,7 @@ const auth = async (req, res, next) => {
         req.user = user;
         next();
     } catch (e) {
-        errorHandler(res, 400, 'Please authenticate');
+        errorHandler(res, 400, e.message);
     }
 }
 module.exports = {auth}
